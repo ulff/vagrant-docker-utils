@@ -9,7 +9,7 @@ cp proxy/config.yaml.TEMPLATE proxy/config.yaml
 vi proxy/config.yaml
 
 # Wordpress specific setup
-if [ -d "local-config.php.TEMPLATE" ]; then
+if [ -f "local-config.php.TEMPLATE" ]; then
   echo "creating local-config.php"
   cp local-config.php.TEMPLATE local-config.php
 fi

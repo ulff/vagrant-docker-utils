@@ -6,5 +6,11 @@
 
 modman remove ubuntu1410-docker
 modmab remove vagrant-docker-utils
-rm proxy/config.yaml
-rm local-config.php
+
+if [ "proxy/config.yaml" ]; then
+  rm proxy/config.yaml
+fi
+
+if [ "local-config.php" ]; then
+  rm local-config.php
+fi

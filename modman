@@ -1,4 +1,4 @@
-vagrant-down.sh bin2/vagrant-down.sh
-vagrant-halt.sh bin2/vagrant-halt.sh
-vagrant-ssh.sh  bin2/vagrant-ssh.sh
-vagrant-up.sh   bin2/vagrant-up.sh
+vagrant-down.sh bin/vagrant-down.sh
+vagrant-halt.sh bin/vagrant-halt.sh
+vagrant-ssh.sh  bin/vagrant-ssh.sh
+vagrant-up.sh   bin/vagrant-up.sh

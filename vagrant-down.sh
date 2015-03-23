@@ -5,7 +5,7 @@
 # vagrant destroy -f && vagrant destroy -f $default_container
 
 modman remove ubuntu1410-docker
-modmab remove vagrant-docker-utils
+modman remove vagrant-docker-utils
 
 if [ "proxy/config.yaml" ]; then
   rm proxy/config.yaml

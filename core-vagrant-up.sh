@@ -14,8 +14,8 @@ if [ -f "local-config.php.TEMPLATE" ]; then
   cp local-config.php.TEMPLATE local-config.php
 fi
 
-# vagrant up --provider=docker --no-parallel
+vagrant up --provider=docker --no-parallel
 
-# location=$(pwd)
-# default_container=$(vagrant global-status | grep $location/proxy | awk -F "^| default" '{print $1}')
-# vagrant ssh $default_container
+location=$(pwd)
+default_container=$(vagrant global-status | grep $location/proxy | awk -F "^| default" '{print $1}')
+vagrant ssh $default_container

@@ -11,7 +11,7 @@ IP=192.168.36.10
 PORT=8080
 VM_HOSTNAME="devstack.dev"
 
-PS3="Enter the space shuttle to get more information : "
+PS3="Pick project to setup : "
 
 select hostname in devstack maritime sysla offshore
 do

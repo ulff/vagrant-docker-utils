@@ -55,6 +55,20 @@ if [ -f "local-config.php.TEMPLATE" ]; then
   cp local-config.php.TEMPLATE local-config.php
 fi
 
+# E2E test specific setup
+if [ -f "conf.js.TEMPLATE" ]; then
+  if [ ! -f "conf.js" ]; then
+    echo "Enter SauceLabs credentials"
+    read -p "Username:" SAUCE_LABS_USERNAME
+    read -p "AccessKey:" SAUCE_LABS_ACCESS_KEY
+
+    sed "s/<SAUCE_LABS_USERNAME>/$SAUCE_LABS_USERNAME/;s/<SAUCE_LABS_ACCESS_KEY>/$SAUCE_LABS_ACCESS_KEY/" < conf.js.TEMPLATE > conf.js
+  fi
+  if [ ! -f "Gruntfile.js" ]; then
+    sed "s/<SAUCE_LABS_USERNAME>/$SAUCE_LABS_USERNAME/;s/<SAUCE_LABS_ACCESS_KEY>/$SAUCE_LABS_ACCESS_KEY/" < Gruntfile.js.TEMPLATE > Gruntfile.js
+  fi
+fi
+
 vagrant up --provider=docker --no-parallel
 
 location=$(pwd)

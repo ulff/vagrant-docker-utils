@@ -13,7 +13,7 @@ VM_HOSTNAME="devstack.dev"
 
 PS3="Pick project to setup : "
 
-select hostname in devstack maritime sysla offshore
+select hostname in devstack maritime sysla offshore CUSTOM
 do
     case $hostname in
     devstack)
@@ -38,6 +38,15 @@ do
       IP=192.168.36.13
       PORT=8083
       VM_HOSTNAME=offshore.no
+      break
+      ;;
+    CUSTOM)
+      IP="<INPUT_IP>"
+      PORT="<INPUT_PORT>"
+      read -p "Enter hostname: " VM_HOSTNAME
+      echo $VM_HOSTNAME
+      echo $IP
+      echo $PORT
       break
       ;;
     *)

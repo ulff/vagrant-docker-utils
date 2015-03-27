@@ -47,6 +47,7 @@ do
 done
 
 sed "s/<HOSTNAME>/$VM_HOSTNAME/;s/<IP_ADDRESS>/$IP/;s/<PORT>/$PORT/" < proxy/config.yaml.TEMPLATE > proxy/config.yaml
+sed "s/<HOSTNAME>/$VM_HOSTNAME/" < proxy/Vagrantfile.proxy.TEMPLATE > proxy/Vagrantfile.proxy
 vi proxy/config.yaml
 
 # Wordpress specific setup

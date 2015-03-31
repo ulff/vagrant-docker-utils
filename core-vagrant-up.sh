@@ -25,19 +25,19 @@ do
     maritime)
       IP=192.168.36.11
       PORT=8081
-      VM_HOSTNAME=maritime.no
+      VM_HOSTNAME=maritime.lh
       break
       ;;
     sysla)
       IP=192.168.36.12
       PORT=8082
-      VM_HOSTNAME=sysla.no
+      VM_HOSTNAME=sysla.lh
       break
       ;;
     offshore)
       IP=192.168.36.13
       PORT=8083
-      VM_HOSTNAME=offshore.no
+      VM_HOSTNAME=offshore.lh
       break
       ;;
     CUSTOM)

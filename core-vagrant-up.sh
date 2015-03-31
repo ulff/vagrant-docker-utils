@@ -64,6 +64,10 @@ if [ -f "local-config.php.TEMPLATE" ]; then
   echo "creating local-config.php"
   cp local-config.php.TEMPLATE local-config.php
 fi
+if [ -f "local-test-config.php.TEMPLATE" ]; then
+  echo "creating local-test-config.php"
+  cp local-test-config.php.TEMPLATE local-test-config.php
+fi
 
 # E2E test specific setup
 if [ -f "conf.js.TEMPLATE" ]; then

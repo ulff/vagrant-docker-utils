@@ -5,6 +5,8 @@ modman clone git@github.com:Sysla/ubuntu1410-docker.git
 modman update-all
 modman deploy-all
 
+git submodule update --init --recursive
+
 echo "creating proxy/config.yaml"
 
 IP=192.168.36.10
@@ -13,7 +15,7 @@ VM_HOSTNAME="devstack.dev"
 
 PS3="Pick project to setup : "
 
-select hostname in devstack maritime sysla offshore CUSTOM
+select hostname in devstack maritime sysla offshore offshore-mysql CUSTOM
 do
     case $hostname in
     devstack)
@@ -38,6 +40,12 @@ do
       IP=192.168.36.13
       PORT=8083
       VM_HOSTNAME=offshore.lh
+      break
+      ;;
+    offshore-mysql)
+      IP=192.168.36.14
+      PORT=8084
+      VM_HOSTNAME=offshore-mysql
       break
       ;;
     CUSTOM)

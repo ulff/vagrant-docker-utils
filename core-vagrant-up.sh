@@ -91,6 +91,17 @@ if [ -f "conf.js.TEMPLATE" ]; then
   fi
 fi
 
+# docker config
+if [ -f ".dockercfg.TEMPLATE" ]; then
+  if [ ! -f ".dockercfg" ]; then
+    echo "Enter hub.docker.com credentials"
+    read -p "email:" DOCKER_USER_EMAIL
+    read -p "auth:" DOCKER_USER_AUTH
+
+    sed "s/<EMAIL>/$DOCKER_USER_EMAIL/;s/<AUTH>/$DOCKER_USER_AUTH/" < .dockercfg.TEMPLATE > .dockercfg
+  fi
+fi
+
 vagrant up --provider=docker --no-parallel
 
 location=$(pwd)

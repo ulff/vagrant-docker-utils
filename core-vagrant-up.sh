@@ -102,6 +102,15 @@ if [ -f ".dockercfg.TEMPLATE" ]; then
   fi
 fi
 
+if [ -f "composer.json" ]; then
+  rm -fr vendor
+  rm -fr wp
+fi
+
+if [ -f "package.json" ]; then
+  rm -fr node_modules
+fi
+
 vagrant up --provider=docker --no-parallel
 
 location=$(pwd)

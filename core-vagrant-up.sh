@@ -48,6 +48,12 @@ do
       VM_HOSTNAME=offshore-mysql
       break
       ;;
+    wntt-docker-vagrant)
+      IP=192.168.36.16
+      PORT=8092
+      VM_HOSTNAME=wntt.lh
+      break
+      ;;
     CUSTOM)
       IP="<INPUT_IP>"
       PORT="<INPUT_PORT>"

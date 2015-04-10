@@ -71,6 +71,16 @@ vi proxy/config.yaml
 if [ -f "local-config.php.TEMPLATE" ]; then
   echo "creating local-config.php"
   cp local-config.php.TEMPLATE local-config.php
+
+  if [ -f "composer.json" ]; then
+    rm -fr vendor
+    rm -fr wp
+    rm composer.lock
+  fi
+
+  if [ -f "package.json" ]; then
+    rm -fr node_modules
+  fi
 fi
 if [ -f "local-test-config.php.TEMPLATE" ]; then
   echo "creating local-test-config.php"
@@ -100,16 +110,6 @@ if [ -f ".dockercfg.TEMPLATE" ]; then
 
     sed "s/<EMAIL>/$DOCKER_USER_EMAIL/;s/<AUTH>/$DOCKER_USER_AUTH/" < .dockercfg.TEMPLATE > .dockercfg
   fi
-fi
-
-if [ -f "composer.json" ]; then
-  rm -fr vendor
-  rm -fr wp
-  rm composer.lock
-fi
-
-if [ -f "package.json" ]; then
-  rm -fr node_modules
 fi
 
 vagrant up --provider=docker --no-parallel

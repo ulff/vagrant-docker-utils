@@ -1,4 +1,5 @@
 vagrant-down.sh    bin/vagrant-down.sh
 vagrant-halt.sh    bin/vagrant-halt.sh
 vagrant-ssh.sh     bin/vagrant-ssh.sh
+vagrant-reload.sh  bin/vagrant-reload.sh
 core-vagrant-up.sh bin/core-vagrant-up.sh

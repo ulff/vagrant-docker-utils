@@ -20,7 +20,7 @@ args=("$@")
 hostname=${args[0]}
 
 if [ -z "${args[0]}" ]; then
-    select hostname in devstack maritime sysla offshore offshore-mysql CUSTOM
+    select hostname in devstack maritime sysla offshore offshore-mysql wntt CUSTOM
     do
         break
     done

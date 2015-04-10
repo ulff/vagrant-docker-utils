@@ -105,6 +105,7 @@ fi
 if [ -f "composer.json" ]; then
   rm -fr vendor
   rm -fr wp
+  rm composer.lock
 fi
 
 if [ -f "package.json" ]; then

@@ -16,9 +16,10 @@ VM_HOSTNAME="devstack.dev"
 PS3="Pick project to setup : "
 
 args=("$@")
+
 hostname=${args[0]}
 
-if [ -z "$hostname" ]; then
+if [ -z "${args[0]}" ]; then
     select hostname in devstack maritime sysla offshore offshore-mysql CUSTOM
     do
         break
@@ -78,7 +79,7 @@ esac
 sed "s/<IP_ADDRESS>/$IP/;s/<PORT>/$PORT/" < proxy/config.yaml.TEMPLATE > proxy/config.yaml
 sed "s/<HOSTNAME>/$VM_HOSTNAME/" < proxy/Vagrantfile.proxy.TEMPLATE > proxy/Vagrantfile.proxy
 
-if [ -z "$hostname" ]; then
+if [ -z "${args[0]}" ]; then
   vi proxy/config.yaml
 fi
 

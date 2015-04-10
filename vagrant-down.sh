@@ -14,3 +14,12 @@ fi
 if [ -f "local-config.php" ]; then
   rm local-config.php
 fi
+
+if [ -f "composer.json" ]; then
+  rm -fr vendor
+  rm -fr wp
+fi
+
+if [ -f "package.json" ]; then
+  rm -fr node_modules
+fi

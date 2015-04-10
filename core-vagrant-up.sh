@@ -15,7 +15,7 @@ VM_HOSTNAME="devstack.dev"
 
 PS3="Pick project to setup : "
 
-select hostname in devstack maritime sysla offshore offshore-mysql CUSTOM
+select hostname in devstack maritime sysla offshore offshore-mysql wntt CUSTOM
 do
     case $hostname in
     devstack)
@@ -48,7 +48,7 @@ do
       VM_HOSTNAME=offshore-mysql
       break
       ;;
-    wntt-docker-vagrant)
+    wntt)
       IP=192.168.36.16
       PORT=8092
       VM_HOSTNAME=wntt.lh

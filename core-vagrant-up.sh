@@ -15,62 +15,88 @@ VM_HOSTNAME="devstack.dev"
 
 PS3="Pick project to setup : "
 
-select hostname in devstack maritime sysla offshore offshore-mysql CUSTOM
-do
-    case $hostname in
-    devstack)
-      IP=192.168.36.10
-      PORT=8080
-      VM_HOSTNAME=devstack.dev
-      break
-      ;;
-    maritime)
-      IP=192.168.36.11
-      PORT=8081
-      VM_HOSTNAME=maritime.lh
-      break
-      ;;
-    sysla)
-      IP=192.168.36.12
-      PORT=8082
-      VM_HOSTNAME=sysla.lh
-      break
-      ;;
-    offshore)
-      IP=192.168.36.13
-      PORT=8083
-      VM_HOSTNAME=offshore.lh
-      break
-      ;;
-    offshore-mysql)
-      IP=192.168.36.14
-      PORT=8084
-      VM_HOSTNAME=offshore-mysql
-      break
-      ;;
-    CUSTOM)
-      IP="<INPUT_IP>"
-      PORT="<INPUT_PORT>"
-      read -p "Enter hostname: " VM_HOSTNAME
-      echo $VM_HOSTNAME
-      echo $IP
-      echo $PORT
-      break
-      ;;
-    *)
-      echo "Error: Please try again"
-      ;;
-  esac
-done
+args=("$@")
+
+hostname=${args[0]}
+
+if [ -z "${args[0]}" ]; then
+    select hostname in devstack maritime sysla offshore offshore-mysql CUSTOM
+    do
+        break
+    done
+fi
+case $hostname in
+  devstack)
+    IP=192.168.36.10
+    PORT=8080
+    VM_HOSTNAME=devstack.dev
+    break
+    ;;
+  maritime)
+    IP=192.168.36.11
+    PORT=8081
+    VM_HOSTNAME=maritime.lh
+    break
+    ;;
+  sysla)
+    IP=192.168.36.12
+    PORT=8082
+    VM_HOSTNAME=sysla.lh
+    break
+    ;;
+  offshore)
+    IP=192.168.36.13
+    PORT=8083
+    VM_HOSTNAME=offshore.lh
+    break
+    ;;
+  offshore-mysql)
+    IP=192.168.36.14
+    PORT=8084
+    VM_HOSTNAME=offshore-mysql
+    break
+    ;;
+  wntt)
+    IP=192.168.36.16
+    PORT=8092
+    VM_HOSTNAME=wntt.lh
+    break
+    ;;
+  CUSTOM)
+    IP="<INPUT_IP>"
+    PORT="<INPUT_PORT>"
+    read -p "Enter hostname: " VM_HOSTNAME
+    echo $VM_HOSTNAME
+    echo $IP
+    echo $PORT
+    break
+    ;;
+  *)
+    echo "Error: Please try again"
+    ;;
+esac
 
 sed "s/<IP_ADDRESS>/$IP/;s/<PORT>/$PORT/" < proxy/config.yaml.TEMPLATE > proxy/config.yaml
 sed "s/<HOSTNAME>/$VM_HOSTNAME/" < proxy/Vagrantfile.proxy.TEMPLATE > proxy/Vagrantfile.proxy
-vi proxy/config.yaml
+
+if [ -z "${args[0]}" ]; then
+  vi proxy/config.yaml
+fi
 
 # Wordpress specific setup
 if [ -f "local-config.php.TEMPLATE" ]; then
   echo "creating local-config.php"
   cp local-config.php.TEMPLATE local-config.php
+
+  if [ -f "composer.json" ]; then
+    rm -fr vendor
+    rm -fr wp
+    rm composer.lock
+  fi
+
+  if [ -f "package.json" ]; then
+    rm -fr node_modules
+  fi
 fi
 if [ -f "local-test-config.php.TEMPLATE" ]; then
   echo "creating local-test-config.php"

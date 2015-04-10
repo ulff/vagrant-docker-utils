@@ -15,7 +15,16 @@ VM_HOSTNAME="devstack.dev"
 
 PS3="Pick project to setup : "
 
-select hostname in devstack maritime sysla offshore offshore-mysql wntt CUSTOM
+args=("$@")
+hostname=${args[0]}
+
+if [ -z "$hostname" ]; then
+    select hostname in devstack maritime sysla offshore offshore-mysql CUSTOM
+    do
+        break
+    done
+fi
+
 do
     case $hostname in
     devstack)
@@ -71,7 +80,10 @@ done
 
 sed "s/<IP_ADDRESS>/$IP/;s/<PORT>/$PORT/" < proxy/config.yaml.TEMPLATE > proxy/config.yaml
 sed "s/<HOSTNAME>/$VM_HOSTNAME/" < proxy/Vagrantfile.proxy.TEMPLATE > proxy/Vagrantfile.proxy
-vi proxy/config.yaml
+
+if [ -z "$hostname" ]; then
+  vi proxy/config.yaml
+fi
 
 # Wordpress specific setup
 if [ -f "local-config.php.TEMPLATE" ]; then

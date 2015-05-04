@@ -86,7 +86,7 @@ fi
 # Wordpress specific setup
 if [ -f "local-config.php.TEMPLATE" ]; then
   if [ ! -f "local-config.php" ]; then
-    echo "creating local-config.php"
+    echo "Creating local-config.php"
     read -p "Enter AWS_ACCESS_KEY_ID: " AWS_ACCESS_KEY_ID
     read -p "Enter AWS_SECRET_ACCESS_KEY: " AWS_SECRET_ACCESS_KEY
     sed "s/<AWS_ACCESS_KEY_ID>/$AWS_ACCESS_KEY_ID/;s/<AWS_SECRET_ACCESS_KEY>/$AWS_SECRET_ACCESS_KEY/" < local-config.php.TEMPLATE > local-config.php
@@ -110,9 +110,9 @@ fi
 # E2E test specific setup
 if [ -f "conf.js.TEMPLATE" ]; then
   if [ ! -f "conf.js" ]; then
-    echo "Enter SauceLabs credentials"
-    read -p "Username:" SAUCE_LABS_USERNAME
-    read -p "AccessKey:" SAUCE_LABS_ACCESS_KEY
+    echo "Creating SauceLabs credentials"
+    read -p "Enter SauceLabs Username:" SAUCE_LABS_USERNAME
+    read -p "Enter SauceLabs AccessKey:" SAUCE_LABS_ACCESS_KEY
 
     sed "s/<SAUCE_LABS_USERNAME>/$SAUCE_LABS_USERNAME/;s/<SAUCE_LABS_ACCESS_KEY>/$SAUCE_LABS_ACCESS_KEY/" < conf.js.TEMPLATE > conf.js
   fi
@@ -124,9 +124,9 @@ fi
 # docker config
 if [ -f ".dockercfg.TEMPLATE" ]; then
   if [ ! -f ".dockercfg" ]; then
-    echo "Enter hub.docker.com credentials"
-    read -p "email:" DOCKER_USER_EMAIL
-    read -p "auth:" DOCKER_USER_AUTH
+    echo "Creating dockerhub credentials"
+    read -p "Enter dockerhub email:" DOCKER_USER_EMAIL
+    read -p "Enter dockerhub auth:" DOCKER_USER_AUTH
 
     sed "s/<EMAIL>/$DOCKER_USER_EMAIL/;s/<AUTH>/$DOCKER_USER_AUTH/" < .dockercfg.TEMPLATE > .dockercfg
   fi

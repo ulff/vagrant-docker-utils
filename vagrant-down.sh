@@ -15,3 +15,15 @@ fi
 if [ -f "local-config.php" ]; then
   rm local-config.php
 fi
+
+if [ -f ".dockercfg" ]; then
+  rm .dockercfg
+fi
+
+if [ -f "conf.js" ]; then
+  rm conf.js
+fi
+
+if [ -f "Gruntfile.js" ]; then
+  rm Gruntfile.js
+fi

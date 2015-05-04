@@ -85,8 +85,12 @@ fi
 
 # Wordpress specific setup
 if [ -f "local-config.php.TEMPLATE" ]; then
-  echo "creating local-config.php"
-  cp local-config.php.TEMPLATE local-config.php
+  if [ ! -f "local-config.php" ]; then
+    echo "creating local-config.php"
+    read -p "Enter AWS_ACCESS_KEY_ID: " AWS_ACCESS_KEY_ID
+    read -p "Enter AWS_SECRET_ACCESS_KEY: " AWS_SECRET_ACCESS_KEY
+    sed "s/<AWS_ACCESS_KEY_ID>/$AWS_ACCESS_KEY_ID/;s/<AWS_SECRET_ACCESS_KEY>/$AWS_SECRET_ACCESS_KEY/" < local-config.php.TEMPLATE > local-config.php
+  fi
 
   if [ -f "composer.json" ]; then
     rm -fr vendor

@@ -93,13 +93,21 @@ if [ -f "local-config.php.TEMPLATE" ]; then
   fi
 
   if [ -f "composer.json" ]; then
-    rm -fr vendor
-    rm -fr wp
-    rm composer.lock
+    if [ -d "vendor" ]; then
+      rm -fr vendor
+    fi
+    if [ -d "wp" ]; then
+      rm -fr wp
+    fi
+    if [ -f "composer.lock" ]; then
+      rm composer.lock
+    fi
   fi
 
   if [ -f "package.json" ]; then
-    rm -fr node_modules
+    if [ -d "node_modules" ]; then
+      rm -fr node_modules
+    fi
   fi
 fi
 if [ -f "local-test-config.php.TEMPLATE" ]; then

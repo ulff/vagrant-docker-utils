@@ -20,7 +20,7 @@ args=("$@")
 hostname=${args[0]}
 
 if [ -z "${args[0]}" ]; then
-    select hostname in devstack maritime sysla offshore offshore-mysql wntt CUSTOM
+    select hostname in devstack maritime sysla offshore offshore-mysql wntt varnish-offshore CUSTOM
     do
         break
     done
@@ -60,6 +60,12 @@ case $hostname in
     IP=192.168.36.16
     PORT=8092
     VM_HOSTNAME=wntt.lh
+    break
+    ;;
+  varnish-offshore)
+    IP=192.168.36.17
+    PORT=8093
+    VM_HOSTNAME=varnish-offshore.lh
     break
     ;;
   CUSTOM)

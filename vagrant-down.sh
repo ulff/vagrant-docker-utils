@@ -4,9 +4,17 @@ location=$(pwd)
 default_container=$(vagrant global-status | grep $location/proxy | awk -F "^| default" '{print $1}')
 vagrant destroy -f && vagrant destroy -f $default_container
 
-modman remove ubuntu1410-docker
-modman remove vagrant-docker-utils
-modman remove e2e-test-utils
+if [ -d ".modman/ubuntu1410-docker" ]; then
+  modman remove ubuntu1410-docker
+fi
+
+if [ -d ".modman/vagrant-docker-utils" ]; then
+  modman remove vagrant-docker-utils
+fi
+
+if [ -d ".modman/e2e-test-utils" ]; then
+  modman remove e2e-test-utils
+fi
 
 if [ -f "proxy/config.yaml" ]; then
   rm proxy/config.yaml

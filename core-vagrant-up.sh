@@ -20,7 +20,7 @@ args=("$@")
 hostname=${args[0]}
 
 if [ -z "${args[0]}" ]; then
-    select hostname in devstack maritime sysla offshore offshore-mysql wntt CUSTOM
+    select hostname in devstack maritime sysla offshore offshore-mysql wntt varnish-offshore CUSTOM
     do
         break
     done
@@ -62,6 +62,12 @@ case $hostname in
     VM_HOSTNAME=wntt.lh
     break
     ;;
+  varnish-offshore)
+    IP=192.168.36.17
+    PORT=8093
+    VM_HOSTNAME=varnish-offshore.lh
+    break
+    ;;
   CUSTOM)
     IP="<INPUT_IP>"
     PORT="<INPUT_PORT>"
@@ -86,20 +92,37 @@ fi
 # Wordpress specific setup
 if [ -f "local-config.php.TEMPLATE" ]; then
   if [ ! -f "local-config.php" ]; then
-    echo "creating local-config.php"
-    read -p "Enter AWS_ACCESS_KEY_ID: " AWS_ACCESS_KEY_ID
-    read -p "Enter AWS_SECRET_ACCESS_KEY: " AWS_SECRET_ACCESS_KEY
+    echo "Creating local-config.php"
+
+    AWS_ACCESS_KEY_ID=$(cat credentials.yml | grep AWS_ACCESS_KEY_ID | sed "s/.*://")
+    if [ ! "$AWS_ACCESS_KEY_ID" ]; then
+      read -p "Enter AWS_ACCESS_KEY_ID: " AWS_ACCESS_KEY_ID
+    fi
+
+    AWS_SECRET_ACCESS_KEY=$(cat credentials.yml | grep AWS_SECRET_ACCESS_KEY | sed "s/.*://")
+    if [ ! "$AWS_SECRET_ACCESS_KEY" ]; then
+      read -p "Enter AWS_SECRET_ACCESS_KEY: " AWS_SECRET_ACCESS_KEY
+    fi
+
     sed "s/<AWS_ACCESS_KEY_ID>/$AWS_ACCESS_KEY_ID/;s/<AWS_SECRET_ACCESS_KEY>/$AWS_SECRET_ACCESS_KEY/" < local-config.php.TEMPLATE > local-config.php
   fi
 
   if [ -f "composer.json" ]; then
-    rm -fr vendor
-    rm -fr wp
-    rm composer.lock
+    if [ -d "vendor" ]; then
+      rm -fr vendor
+    fi
+    if [ -d "wp" ]; then
+      rm -fr wp
+    fi
+    if [ -f "composer.lock" ]; then
+      rm composer.lock
+    fi
   fi
 
   if [ -f "package.json" ]; then
-    rm -fr node_modules
+    if [ -d "node_modules" ]; then
+      rm -fr node_modules
+    fi
   fi
 fi
 if [ -f "local-test-config.php.TEMPLATE" ]; then
@@ -110,9 +133,17 @@ fi
 # E2E test specific setup
 if [ -f "conf.js.TEMPLATE" ]; then
   if [ ! -f "conf.js" ]; then
-    echo "Enter SauceLabs credentials"
-    read -p "Username:" SAUCE_LABS_USERNAME
-    read -p "AccessKey:" SAUCE_LABS_ACCESS_KEY
+    echo "Creating SauceLabs credentials"
+
+    SAUCE_LABS_USERNAME=$(cat credentials.yml | grep SAUCE_LABS_USERNAME | sed "s/.*://")
+    if [ ! "$SAUCE_LABS_USERNAME" ]; then
+      read -p "Enter SauceLabs Username:" SAUCE_LABS_USERNAME
+    fi
+
+    SAUCE_LABS_ACCESS_KEY=$(cat credentials.yml | grep SAUCE_LABS_ACCESS_KEY | sed "s/.*://")
+    if [ ! "$SAUCE_LABS_ACCESS_KEY" ]; then
+      read -p "Enter SauceLabs AccessKey:" SAUCE_LABS_ACCESS_KEY
+    fi
 
     sed "s/<SAUCE_LABS_USERNAME>/$SAUCE_LABS_USERNAME/;s/<SAUCE_LABS_ACCESS_KEY>/$SAUCE_LABS_ACCESS_KEY/" < conf.js.TEMPLATE > conf.js
   fi
@@ -124,9 +155,17 @@ fi
 # docker config
 if [ -f ".dockercfg.TEMPLATE" ]; then
   if [ ! -f ".dockercfg" ]; then
-    echo "Enter hub.docker.com credentials"
-    read -p "email:" DOCKER_USER_EMAIL
-    read -p "auth:" DOCKER_USER_AUTH
+    echo "Creating dockerhub credentials"
+
+    DOCKER_USER_EMAIL=$(cat credentials.yml | grep DOCKER_USER_EMAIL | sed "s/.*://")
+    if [ ! "$DOCKER_USER_EMAIL" ]; then
+      read -p "Enter dockerhub email:" DOCKER_USER_EMAIL
+    fi
+
+    DOCKER_USER_AUTH=$(cat credentials.yml | grep DOCKER_USER_AUTH | sed "s/.*://")
+    if [ ! "$DOCKER_USER_AUTH" ]; then
+      read -p "Enter dockerhub auth:" DOCKER_USER_AUTH
+    fi
 
     sed "s/<EMAIL>/$DOCKER_USER_EMAIL/;s/<AUTH>/$DOCKER_USER_AUTH/" < .dockercfg.TEMPLATE > .dockercfg
   fi

@@ -117,12 +117,15 @@ if [ -f "local-config.php.TEMPLATE" ]; then
     if [ -f "composer.lock" ]; then
       rm composer.lock
     fi
+
+    composer install -n
   fi
 
   if [ -f "package.json" ]; then
     if [ -d "node_modules" ]; then
       rm -fr node_modules
     fi
+    npm install --unsafe-perm
   fi
 fi
 if [ -f "local-test-config.php.TEMPLATE" ]; then

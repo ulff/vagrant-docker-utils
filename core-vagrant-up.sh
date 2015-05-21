@@ -120,13 +120,6 @@ if [ -f "local-config.php.TEMPLATE" ]; then
 
     composer install -n
   fi
-
-  if [ -f "package.json" ]; then
-    if [ -d "node_modules" ]; then
-      rm -fr node_modules
-    fi
-    npm install --unsafe-perm
-  fi
 fi
 if [ -f "local-test-config.php.TEMPLATE" ]; then
   echo "creating local-test-config.php"
@@ -171,6 +164,16 @@ if [ -f ".dockercfg.TEMPLATE" ]; then
     fi
 
     sed "s/<EMAIL>/$DOCKER_USER_EMAIL/;s/<AUTH>/$DOCKER_USER_AUTH/" < .dockercfg.TEMPLATE > .dockercfg
+  fi
+fi
+
+# Wordpress specific setup
+if [ -f "local-config.php.TEMPLATE" ]; then
+  if [ -f "package.json" ]; then
+    if [ -d "node_modules" ]; then
+      rm -fr node_modules
+    fi
+    npm install --unsafe-perm
   fi
 fi
 

@@ -176,6 +176,9 @@ if [ -f "local-config.php.TEMPLATE" ]; then
     fi
     npm install --unsafe-perm
   fi
+  if [ -f ".htaccess.TEMPLATE" ]; then
+    sed 's#<WEBSITE_DOMAIN>#offshore.lh#;s#<WEBSITE_DOMAIN_EXITED>#offshore\\.lh#' < .htaccess.TEMPLATE > wp/.htaccess
+  fi
 fi
 
 vagrant up --provider=docker --no-parallel

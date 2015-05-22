@@ -119,6 +119,7 @@ if [ -f "local-config.php.TEMPLATE" ]; then
     fi
 
     composer install -n
+    composer update
   fi
 fi
 if [ -f "local-test-config.php.TEMPLATE" ]; then

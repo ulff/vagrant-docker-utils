@@ -84,6 +84,7 @@ esac
 
 sed "s/<IP_ADDRESS>/$IP/;s/<PORT>/$PORT/" < proxy/config.yaml.TEMPLATE > proxy/config.yaml
 sed "s/<HOSTNAME>/$VM_HOSTNAME/" < proxy/Vagrantfile.proxy.TEMPLATE > proxy/Vagrantfile.proxy
+sed "s/, type: \"nfs\"//" < proxy/Vagrantfile.proxy > proxy/Vagrantfile.proxy
 
 if [ -z "${args[0]}" ]; then
   vi proxy/config.yaml

@@ -84,8 +84,13 @@ esac
 
 sed "s/<IP_ADDRESS>/$IP/;s/<PORT>/$PORT/" < proxy/config.yaml.TEMPLATE > proxy/config.yaml
 sed "s/<HOSTNAME>/$VM_HOSTNAME/" < proxy/Vagrantfile.proxy.TEMPLATE > proxy/Vagrantfile.proxy
+
 cp proxy/Vagrantfile.proxy proxy/Vagrantfile.proxy.cp
 sed "s/type: \"nfs\"/:mount_options => [\"dmode=777,fmode=777\"]/" < proxy/Vagrantfile.proxy.cp > proxy/Vagrantfile.proxy
+rm proxy/Vagrantfile.proxy.cp
+
+cp proxy/Vagrantfile.proxy proxy/Vagrantfile.proxy.cp
+sed "s/2048/4096/" < proxy/Vagrantfile.proxy.cp > proxy/Vagrantfile.proxy
 rm proxy/Vagrantfile.proxy.cp
 
 if [ -z "${args[0]}" ]; then
